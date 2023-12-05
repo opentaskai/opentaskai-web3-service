@@ -22,6 +22,7 @@ describe('Web3', async () => {
         it('signDepositAndFreezeData', async () => {
             const to = payment.address;
             const token = chain.getTokenAddr('USDT');
+            console.log('usdt', token);
             const available = common.bignumber.bnWithDecimals(2, 6);
             const frozen = common.bignumber.bnWithDecimals(1, 6);
             const sn = uuid();
