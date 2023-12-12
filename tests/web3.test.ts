@@ -1,5 +1,5 @@
 import { constants, common } from 'opentaskai-web3-jssdk';
-import { chain, payment } from '../src/web3';
+import { chain, payment, aiOriginals } from '../src/web3';
 import { uuid } from '../src/utils/util';
 
 describe('Web3', async () => {
@@ -20,7 +20,7 @@ describe('Web3', async () => {
         });
 
         it('signDepositAndFreezeData', async () => {
-            const to = payment.address;
+            const to = await chain.getAccount();
             const token = chain.getTokenAddr('USDT');
             console.log('usdt', token);
             const available = common.bignumber.bnWithDecimals(2, 6);
@@ -28,6 +28,23 @@ describe('Web3', async () => {
             const sn = uuid();
             const data = await payment.signDepositAndFreezeData(to, token, available, frozen, sn);
             console.log('getBalance:', data);
+        });
+
+        // it('signCancelData', async () => {
+        //     const userA: any;
+        //     const token = chain.getTokenAddr('USDT');
+        //     console.log('usdt', token);
+        //     const available = common.bignumber.bnWithDecimals(2, 6);
+        //     const frozen = common.bignumber.bnWithDecimals(1, 6);
+        //     const sn = uuid();
+        //     const data = await payment.signCancelData(to, token, available, frozen, sn);
+        //     console.log('getBalance:', data);
+        // });
+
+        it('signMintData', async () => {
+            const sn = uuid();
+            const data = await aiOriginals.signMintData(sn);
+            console.log('signMintData:', data);
         });
     });
 });

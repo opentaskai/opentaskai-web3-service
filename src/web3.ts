@@ -1,8 +1,11 @@
-import { Payment, LocalChain } from 'opentaskai-web3-jssdk';
+import { Payment, LocalChain, opentaskai } from 'opentaskai-web3-jssdk';
 import { APP_ENV } from '../src/constants';
 import { Wallet } from 'ethers';
 console.log('app env:', APP_ENV);
-const signer = new Wallet(APP_ENV.SIGNER_PK);
+export const signer = new Wallet(APP_ENV.SIGNER_PK);
 export const chain = new LocalChain(APP_ENV.CHAIN_ID, APP_ENV.CHAIN_RPC);
 export const payment = new Payment(chain);
 payment.setSigner(signer);
+const network = opentaskai.getNetworkMeta(chain.chainId);
+export const aiOriginals = opentaskai.getNFT(chain, network.AIOriginals);
+aiOriginals.setSigner(signer);

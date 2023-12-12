@@ -51,8 +51,8 @@ dependencies:
     specifier: ^2.0.19
     version: 2.0.22
   opentaskai-web3-jssdk:
-    specifier: ^0.0.1
-    version: 0.0.1(ethers@5.7.2)
+    specifier: ^0.0.8
+    version: 0.0.8(ethers@5.7.2)
   request-ip:
     specifier: ^3.3.0
     version: 3.3.0
@@ -4811,8 +4811,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /opentaskai-web3-jssdk@0.0.1(ethers@5.7.2):
-    resolution: {integrity: sha512-GDGZw394jymGZz4odEN2YRPGeTQCu5oGbFGG4zqRTS49rmUoIAQf8/qWytb7WxqvjEMAL4AMfn73rqzBsGpO6Q==}
+  /opentaskai-web3-jssdk@0.0.8(ethers@5.7.2):
+    resolution: {integrity: sha512-FNXJdTqmlL8g7hmZXTM5oF8zdjkCi0rCOc5m4SmMlt6D3Yfb7K42iORo8LZJRDYEjfqsd16emffYtcvSnLn30Q==}
     peerDependencies:
       ethers: ^5.7.1
     dependencies:
