@@ -17,6 +17,7 @@ export class TransactionService extends BaseService {
     }
 
     async checkSN(sn: string) {
+        console.log('APP_ENV.IS_CHECK_SN:', APP_ENV.IS_CHECK_SN);
         if (!APP_ENV.IS_CHECK_SN) {
             return true;
         }

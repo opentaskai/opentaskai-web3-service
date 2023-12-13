@@ -6,6 +6,8 @@ function toBool(_val: any, _def: boolean) {
         _val = String(_val).toLowerCase();
         if (_val === 'true') {
             return true;
+        } else {
+            return false;
         }
     }
 
