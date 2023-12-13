@@ -1,10 +1,14 @@
 import { constants, common } from 'opentaskai-web3-jssdk';
-import { chain, payment, aiOriginals } from '../src/web3';
+import { getChain, getAiOriginals, getPayment } from '../src/web3';
 import { uuid } from '../src/utils/util';
+import { APP_ENV } from '../src/constants';
 
 describe('Web3', async () => {
     describe('base', async () => {
         let res: any;
+        const chain = getChain(APP_ENV.CHAIN_ID);
+        const payment = getPayment(chain);
+        const aiOriginals = getAiOriginals(chain);
 
         before(async () => {
             console.log('chain id:', chain.chainId);

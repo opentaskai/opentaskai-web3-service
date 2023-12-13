@@ -1,11 +1,28 @@
-import { Payment, getNFT, LocalChain, opentaskai } from 'opentaskai-web3-jssdk';
+import { Payment, getNFT, NFT, LocalChain, getChain, opentaskai } from 'opentaskai-web3-jssdk';
 import { APP_ENV } from '../src/constants';
 import { Wallet } from 'ethers';
 console.log('app env:', APP_ENV);
 export const signer = new Wallet(APP_ENV.SIGNER_PK);
-export const chain = new LocalChain(APP_ENV.CHAIN_ID, APP_ENV.CHAIN_RPC);
-export const payment = new Payment(chain);
-payment.setSigner(signer);
-const network = opentaskai.getNetworkMeta(chain.chainId);
-export const aiOriginals = getNFT(chain, network.AIOriginals);
-aiOriginals.setSigner(signer);
+
+const _cachePayment: Record<string, Payment> = {};
+export function getPayment(chainId: any): Payment {
+    if (!_cachePayment[chainId]) {
+        const chain = getChain(chainId);
+        _cachePayment[chainId] = new Payment(chain);
+        _cachePayment[chainId].setSigner(signer);
+    }
+    return _cachePayment[chainId];
+}
+
+const _cacheAiOriginals: Record<string, NFT> = {};
+export function getAiOriginals(chainId: any): NFT {
+    if (!_cacheAiOriginals[chainId]) {
+        const chain = getChain(chainId);
+        const network = opentaskai.getNetworkMeta(chain.chainId);
+        _cacheAiOriginals[chainId] = getNFT(chain, network.AIOriginals);
+        _cacheAiOriginals[chainId].setSigner(signer);
+    }
+    return _cacheAiOriginals[chainId];
+}
+
+export { getChain };
