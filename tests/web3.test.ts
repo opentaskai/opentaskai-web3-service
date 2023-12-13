@@ -30,16 +30,23 @@ describe('Web3', async () => {
             console.log('getBalance:', data);
         });
 
-        // it('signCancelData', async () => {
-        //     const userA: any;
-        //     const token = chain.getTokenAddr('USDT');
-        //     console.log('usdt', token);
-        //     const available = common.bignumber.bnWithDecimals(2, 6);
-        //     const frozen = common.bignumber.bnWithDecimals(1, 6);
-        //     const sn = uuid();
-        //     const data = await payment.signCancelData(to, token, available, frozen, sn);
-        //     console.log('getBalance:', data);
-        // });
+        it('signCancelData', async () => {
+            const userA: any = {
+                user: '0xBe46A6c57aB6d9272b5674C47fe587Dd3B5B54Db',
+                token: chain.getTokenAddr('USDT'),
+                amount: common.bignumber.bnWithDecimals(2, 18),
+                fee: common.bignumber.bnWithDecimals(1, 18)
+            };
+            const userB: any = {
+                user: await chain.getAccount(),
+                token: chain.getTokenAddr('USDT'),
+                amount: common.bignumber.bnWithDecimals(2, 18),
+                fee: common.bignumber.bnWithDecimals(1, 18)
+            };
+            const sn = uuid();
+            const data = await payment.signCancelData(userA, userB, sn);
+            console.log('signCancelData:', data);
+        });
 
         it('signMintData', async () => {
             const sn = uuid();
