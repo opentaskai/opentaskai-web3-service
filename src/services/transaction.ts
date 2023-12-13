@@ -1,4 +1,5 @@
 import { BaseService } from './base';
+import { APP_ENV } from '../constants';
 
 export class TransactionService extends BaseService {
     initFields() {
@@ -13,6 +14,17 @@ export class TransactionService extends BaseService {
             status: 'string'
         };
         super.initFields();
+    }
+
+    async checkSN(sn: string) {
+        if (!APP_ENV.IS_CHECK_SN) {
+            return true;
+        }
+        const res = await this.findByUnique({ sn });
+        if (!res) {
+            throw new Error('invalid sn');
+        }
+        return true;
     }
 }
 

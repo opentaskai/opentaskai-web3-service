@@ -34,8 +34,10 @@ app.use((req, res, next) => {
 
 import IndexRouter from './routers/index';
 import PaymentRouter from './routers/payment';
+import NFTRouter from './routers/nft';
 
 app.use('/v1/payment', PaymentRouter);
+app.use('/v1/nft', NFTRouter);
 app.use('', IndexRouter);
 
 app.listen(port, async () => {

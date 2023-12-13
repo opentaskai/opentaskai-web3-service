@@ -1,6 +1,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+function toBool(_val: any, _def: boolean) {
+    if (_val !== undefined) {
+        _val = String(_val).toLowerCase();
+        if (_val === 'true') {
+            return true;
+        }
+    }
+
+    return _def;
+}
+
 export type APP_ENV_MONGODB_TYPE = {
     HOST: string;
     PORT: string;
@@ -21,6 +32,7 @@ export type APP_ENV_TYPE = {
     SIGNER_PK: string;
     CHAIN_RPC: string;
     IP_WHITE_LIST: string[];
+    IS_CHECK_SN: boolean;
 };
 
 export const APP_ENV: APP_ENV_TYPE = {
@@ -40,7 +52,8 @@ export const APP_ENV: APP_ENV_TYPE = {
     CHAIN_ID: process.env.CHAIN_ID ? Number(process.env.CHAIN_ID) : 56,
     SIGNER_PK: process.env.SIGNER_PK ?? '',
     CHAIN_RPC: process.env.CHAIN_RPC ?? '',
-    IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',') : ['127.0.0.1', '::1']
+    IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',') : ['127.0.0.1', '::1'],
+    IS_CHECK_SN: toBool(process.env.IS_CHECK_SN, true)
 };
 
 export enum TRANS_CHANNEL {
