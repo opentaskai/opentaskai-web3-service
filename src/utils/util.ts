@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import moment from 'moment';
 import { v4 } from 'uuid';
 
@@ -13,12 +12,6 @@ export const rgbToHex = (r: number, g: number, b: number): string => {
 
 export const sleep = (ms: number): Promise<Function> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
-export const md5 = (data: any) => {
-    const hash = crypto.createHash('md5');
-    hash.update(data);
-    return hash.digest('hex');
 };
 
 export const isEnglish = (str: string): boolean => {
@@ -100,15 +93,6 @@ export const getMonths = (start_date: string, end_date: string | number): any[] 
     }
     months[months.length - 1].end = moment.utc(end_date).endOf('month').endOf('day').toISOString();
     return months;
-};
-
-export const getChanelCode = (str: string): string => {
-    function generateInviteCode(identifier: string, length = 6): string {
-        const hashedIdentifier = crypto.createHash('sha256').update(identifier).digest('hex');
-        const inviteCode = hashedIdentifier.substr(0, length);
-        return inviteCode;
-    }
-    return generateInviteCode(str);
 };
 
 export const onlyNumber = (val: any) => {
