@@ -9,6 +9,7 @@ describe('Web3', async () => {
         const chain = getChain(APP_ENV.CHAIN_ID);
         const payment = getPayment(chain);
         const aiOriginals = getAiOriginals(chain);
+        const expired = Math.floor(Date.now() / 1000) + 300;
 
         before(async () => {
             console.log('chain id:', chain.chainId);
@@ -30,7 +31,7 @@ describe('Web3', async () => {
             const available = common.bignumber.bnWithDecimals(2, 6);
             const frozen = common.bignumber.bnWithDecimals(1, 6);
             const sn = uuid();
-            const data = await payment.signDepositAndFreezeData(to, token, available, frozen, sn);
+            const data = await payment.signDepositAndFreezeData(to, token, available, frozen, sn, expired);
             console.log('getBalance:', data);
         });
 
@@ -48,13 +49,13 @@ describe('Web3', async () => {
                 fee: common.bignumber.bnWithDecimals(1, 18)
             };
             const sn = uuid();
-            const data = await payment.signCancelData(userA, userB, sn);
+            const data = await payment.signCancelData(userA, userB, sn, expired);
             console.log('signCancelData:', data);
         });
 
         it('signMintData', async () => {
             const sn = uuid();
-            const data = await aiOriginals.signMintData(sn);
+            const data = await aiOriginals.signMintData(sn, expired);
             console.log('signMintData:', data);
         });
     });

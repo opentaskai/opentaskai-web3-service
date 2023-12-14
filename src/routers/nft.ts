@@ -9,10 +9,10 @@ const router: Router = Router();
 
 router.post('/signMintData', async (req: any, res) => {
     try {
-        const { sn } = req.body;
+        const { sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const aiOriginals = getAiOriginals(getChainId(req));
-        const data = await aiOriginals.signMintData(sn);
+        const data = await aiOriginals.signMintData(sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {

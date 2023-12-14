@@ -14,9 +14,9 @@ function paymentIns(req: any) {
 
 router.post('/signDepositAndFreezeData', async (req: any, res) => {
     try {
-        const { to, token, available, frozen, sn } = req.body;
+        const { to, token, available, frozen, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signDepositAndFreezeData(to, token, available, frozen, sn);
+        const data = await paymentIns(req).signDepositAndFreezeData(to, token, available, frozen, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -26,9 +26,9 @@ router.post('/signDepositAndFreezeData', async (req: any, res) => {
 
 router.post('/signWithdrawWithDetail', async (req: any, res) => {
     try {
-        const { to, token, available, frozen, sn } = req.body;
+        const { to, token, available, frozen, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signWithdrawWithDetail(to, token, available, frozen, sn);
+        const data = await paymentIns(req).signWithdrawWithDetail(to, token, available, frozen, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -38,9 +38,9 @@ router.post('/signWithdrawWithDetail', async (req: any, res) => {
 
 router.post('/signFreezeData', async (req: any, res) => {
     try {
-        const { token, amount, sn } = req.body;
+        const { token, amount, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signFreezeData(token, amount, sn);
+        const data = await paymentIns(req).signFreezeData(token, amount, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -50,9 +50,9 @@ router.post('/signFreezeData', async (req: any, res) => {
 
 router.post('/signUnfreezeData', async (req: any, res) => {
     try {
-        const { token, amount, sn } = req.body;
+        const { token, amount, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signFreezeData(token, amount, sn);
+        const data = await paymentIns(req).signFreezeData(token, amount, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -62,9 +62,9 @@ router.post('/signUnfreezeData', async (req: any, res) => {
 
 router.post('/signTransferData', async (req: any, res) => {
     try {
-        const { token, from, to, available, frozen, amount, fee, sn } = req.body;
+        const { token, from, to, available, frozen, amount, fee, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signTransferData(token, from, to, available, frozen, amount, fee, sn);
+        const data = await paymentIns(req).signTransferData(token, from, to, available, frozen, amount, fee, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -74,9 +74,9 @@ router.post('/signTransferData', async (req: any, res) => {
 
 router.post('/signCancelData', async (req: any, res) => {
     try {
-        const { userA, userB, sn } = req.body;
+        const { userA, userB, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await paymentIns(req).signCancelData(userA, userB, sn);
+        const data = await paymentIns(req).signCancelData(userA, userB, sn, expired);
         res.send(Result.success(data));
     } catch (error: any) {
         res.send(Result.fail(error.message));
