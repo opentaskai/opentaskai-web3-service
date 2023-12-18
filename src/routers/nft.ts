@@ -7,7 +7,7 @@ import { getChainId } from '../utils/request';
 
 const router: Router = Router();
 
-router.post('/signMintData', async (req: any, res) => {
+router.post('/signAiOriginalsMintData', async (req: any, res) => {
     try {
         const { sn, expired } = req.body;
         await transactionService.checkSN(sn);
