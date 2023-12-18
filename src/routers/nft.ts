@@ -10,7 +10,6 @@ const router: Router = Router();
 router.post('/signAiOriginalsMintData', async (req: any, res) => {
     try {
         const { sn, expired } = req.body;
-        await transactionService.checkSN(sn);
         const aiOriginals = getAiOriginals(getChainId(req));
         const data = await aiOriginals.signMintData(sn, expired);
         cleanData(data);
