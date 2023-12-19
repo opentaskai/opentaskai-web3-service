@@ -1,5 +1,5 @@
 import { constants, common } from 'opentaskai-web3-jssdk';
-import { getChain, getAiOriginals, getPayment } from '../src/web3';
+import { getChain, getAiGenesis, getPayment } from '../src/web3';
 import { uuid } from '../src/utils/util';
 import { APP_ENV } from '../src/constants';
 
@@ -8,7 +8,7 @@ describe('Web3', async () => {
         let res: any;
         const chain = getChain(APP_ENV.CHAIN_ID);
         const payment = getPayment(chain);
-        const aiOriginals = getAiOriginals(chain);
+        const nft = getAiGenesis(chain);
         const expired = Math.floor(Date.now() / 1000) + 300;
 
         before(async () => {
@@ -55,7 +55,7 @@ describe('Web3', async () => {
 
         it('signMintData', async () => {
             const sn = uuid();
-            const data = await aiOriginals.signMintData(sn, expired);
+            const data = await nft.signMintData(sn, expired);
             console.log('signMintData:', data);
         });
     });

@@ -14,15 +14,15 @@ export function getPayment(chainId: any): Payment {
     return _cachePayment[chainId];
 }
 
-const _cacheAiOriginals: Record<string, NFT> = {};
-export function getAiOriginals(chainId: any): NFT {
-    if (!_cacheAiOriginals[chainId]) {
+const _cacheAIGenesis: Record<string, NFT> = {};
+export function getAiGenesis(chainId: any): NFT {
+    if (!_cacheAIGenesis[chainId]) {
         const chain = getChain(chainId);
         const network = opentaskai.getNetworkMeta(chain.chainId);
-        _cacheAiOriginals[chainId] = getNFT(chain, network.AIOriginals);
-        _cacheAiOriginals[chainId].setSigner(signer);
+        _cacheAIGenesis[chainId] = getNFT(chain, network.AIGenesis);
+        _cacheAIGenesis[chainId].setSigner(signer);
     }
-    return _cacheAiOriginals[chainId];
+    return _cacheAIGenesis[chainId];
 }
 
 export { getChain };
