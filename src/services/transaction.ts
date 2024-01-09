@@ -6,10 +6,14 @@ export class TransactionService extends BaseService {
         this.fields = {
             sn: 'string',
             type: 'string',
+            orderId: 'string',
+            orderListId: 'string',
             amount: 'number',
             owner: 'string',
-            channel_id: 'string',
-            channel_tx: 'string',
+            channelId: 'string',
+            channelUser: 'string',
+            channelTx: 'string',
+            channelTime: 'string',
             data: 'any',
             status: 'string'
         };

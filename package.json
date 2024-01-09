@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "axios": "^0.27.2",
+        "bignumber.js": "^9.1.2",
         "bson": "^5.3.0",
         "cookie-parser": "^1.4.6",
         "crypto-js": "^4.2.0",
@@ -42,7 +43,7 @@
         "moment": "^2.29.4",
         "mongodb": "^4.8.1",
         "nodemon": "^2.0.19",
-        "opentaskai-web3-jssdk": "^0.0.18",
+        "opentaskai-web3-jssdk": "^0.0.21",
         "request-ip": "^3.3.0",
         "sharp": "^0.32.6",
         "sleep-ts": "^0.1.1",

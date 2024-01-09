@@ -25,4 +25,4 @@ export function getAiGenesis(chainId: any): NFT {
     return _cacheAIGenesis[chainId];
 }
 
-export { getChain };
+export { getChain, Payment };
