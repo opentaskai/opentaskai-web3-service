@@ -24,14 +24,14 @@ describe('Web3', async () => {
             console.log('getBalance:', res);
         });
 
-        it('signDepositAndFreezeData', async () => {
-            const to = await chain.getAccount();
+        it('signDepositData', async () => {
+            const to = uuid();
             const token = chain.getTokenAddr('USDT');
             console.log('usdt', token);
             const available = common.bignumber.bnWithDecimals(2, 6);
             const frozen = common.bignumber.bnWithDecimals(1, 6);
             const sn = uuid();
-            const data = await payment.signDepositAndFreezeData(to, token, available, frozen, sn, expired);
+            const data = await payment.signDepositData(to, token, available, frozen, sn, expired);
             console.log('getBalance:', data);
         });
 
