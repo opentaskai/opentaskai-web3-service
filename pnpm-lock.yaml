@@ -54,8 +54,8 @@ dependencies:
     specifier: ^2.0.19
     version: 2.0.22
   opentaskai-web3-jssdk:
-    specifier: ^0.2.2
-    version: 0.2.2
+    specifier: ^0.2.4
+    version: 0.2.4
   request-ip:
     specifier: ^3.3.0
     version: 3.3.0
@@ -4814,8 +4814,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /opentaskai-web3-jssdk@0.2.2:
-    resolution: {integrity: sha512-wCGdsD3WH3egGNE42nyt//5kA2tixdw8YvBVe3jpR5fFDpM8WY1JXdK2OFyA7Bw+igbju60iNQKLxNv68RhwqQ==}
+  /opentaskai-web3-jssdk@0.2.4:
+    resolution: {integrity: sha512-t6cdobmF5KQkZD8gaeGe6dnnLbbPeX6GX72/lPh5f0U5kQg0WlF0RW7l2ATtPnC3lZLAVn94zuNKMdkXlrVTtw==}
     dependencies:
       '@0xsequence/multicall': 0.41.3
       '@ethersproject/abi': 5.7.0
