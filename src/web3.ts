@@ -1,21 +1,38 @@
 import { Payment, getNFT, NFT, LocalChain, getChain, opentaskai } from 'opentaskai-web3-jssdk';
 import { APP_ENV } from '../src/constants';
 import { Wallet } from 'ethers';
-console.log('app env:', APP_ENV);
+console.log('app env:', APP_ENV.PORT);
 export const signer = new Wallet(APP_ENV.SIGNER_PK);
+export const clearer = new Wallet(APP_ENV.CLEARER_PK);
 
-const _cachePayment: Record<string, Payment> = {};
-export function getPayment(chainId: any): Payment {
-    if (!_cachePayment[chainId]) {
+const _cacheSignerPayment: Record<number, Payment> = {};
+export function getSignPayment(chainId: any): Payment {
+    chainId = Number(chainId);
+    if (!_cacheSignerPayment[chainId]) {
         const chain = getChain(chainId);
-        _cachePayment[chainId] = new Payment(chain);
-        _cachePayment[chainId].setSigner(signer);
+        _cacheSignerPayment[chainId] = new Payment(chain);
+        _cacheSignerPayment[chainId].setSigner(signer);
     }
-    return _cachePayment[chainId];
+    return _cacheSignerPayment[chainId];
 }
 
-const _cacheAIGenesis: Record<string, NFT> = {};
+
+const _cacheClearPayment: Record<number, Payment> = {};
+export function getClearPayment(chainId: any): Payment {
+    chainId = Number(chainId);
+    if (!_cacheClearPayment[chainId]) {
+        const chain = new LocalChain(chainId);
+        chain.connect(clearer);
+        console.log('clearer:', clearer.address);
+        _cacheClearPayment[chainId] = new Payment(chain);
+        _cacheClearPayment[chainId].setSigner(clearer);
+    }
+    return _cacheClearPayment[chainId];
+}
+
+const _cacheAIGenesis: Record<number, NFT> = {};
 export function getAiGenesis(chainId: any): NFT {
+    chainId = Number(chainId);
     if (!_cacheAIGenesis[chainId]) {
         const chain = getChain(chainId);
         const network = opentaskai.getNetworkMeta(chain.chainId);

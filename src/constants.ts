@@ -15,13 +15,8 @@ function toBool(_val: any, _def: boolean) {
 }
 
 export type APP_ENV_MONGODB_TYPE = {
-    HOST: string;
-    PORT: string;
-    DB: string;
-    USER: string;
-    PASSWORD: string;
+    URL: string;
     SSLCA: string | undefined;
-    AUTH_SOURCE: string | undefined;
 };
 
 export type APP_ENV_TYPE = {
@@ -32,6 +27,7 @@ export type APP_ENV_TYPE = {
     MONGODB: APP_ENV_MONGODB_TYPE;
     CHAIN_ID: number;
     SIGNER_PK: string;
+    CLEARER_PK: string;
     CHAIN_RPC: string;
     IP_WHITE_LIST: string[];
     IS_CHECK_SN: boolean;
@@ -43,16 +39,12 @@ export const APP_ENV: APP_ENV_TYPE = {
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY + '',
     JWT_EXPIRED: process.env.JWT_EXPIRED + '',
     MONGODB: {
-        HOST: process.env.MONGODB_HOST + '',
-        PORT: process.env?.MONGODB_PORT + '' || '27017',
-        DB: process.env.MONGODB_DB + '',
-        USER: process.env.MONGODB_USER + '',
-        PASSWORD: process.env.MONGODB_PASSWORD + '',
-        SSLCA: process.env?.MONGODB_SSLCA,
-        AUTH_SOURCE: process.env?.MONGODB_AUTH_SOURCE
+        URL: process.env.MONGODB_URL ?? 'mongodb://127.0.0.1:27017',
+        SSLCA: process.env?.MONGODB_SSLCA
     },
     CHAIN_ID: process.env.CHAIN_ID ? Number(process.env.CHAIN_ID) : 56,
     SIGNER_PK: process.env.SIGNER_PK ?? '',
+    CLEARER_PK: process.env.CLEARER_PK ?? '',
     CHAIN_RPC: process.env.CHAIN_RPC ?? '',
     IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',') : ['127.0.0.1', '::1'],
     IS_CHECK_SN: toBool(process.env.IS_CHECK_SN, true)

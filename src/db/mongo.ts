@@ -7,27 +7,18 @@ export class MongoDB extends MongoClient {
     public conf: APP_ENV_MONGODB_TYPE;
     public dba: Db;
     constructor(conf: APP_ENV_MONGODB_TYPE) {
-        let url = `mongodb://${conf.HOST}:${conf.PORT}/${conf.DB}`;
+        let url = conf.URL;
         console.log('MongoDB url', url);
         const option: any = {};
         if (conf.SSLCA) {
             // mongodb://defidb:<insertYourPassword>@docdb-2023-03-16-07-30-27.cluster-cmr5bhdpfbxj.ap-southeast-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
             const ca = path.join(__dirname, '../../' + conf.SSLCA);
-            url = `mongodb://${conf.USER}:${conf.PASSWORD}@${conf.HOST}:${conf.PORT}/${conf.DB}?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`;
-            if (conf.AUTH_SOURCE) {
-                url += '&authSource=' + conf.AUTH_SOURCE;
-            }
             option.tlsCAFile = ca;
-        } else if (conf.USER && conf.PASSWORD) {
-            url = `mongodb://${conf.USER}:${conf.PASSWORD}@${conf.HOST}:${conf.PORT}/${conf.DB}`;
-            if (conf.AUTH_SOURCE) {
-                url += '?authSource=' + conf.AUTH_SOURCE;
-            }
         }
 
         super(url, option);
         this.conf = conf;
-        this.dba = this.db(this.conf.DB);
+        this.dba = this.db();
         // console.log(this.options.metadata);
     }
 }

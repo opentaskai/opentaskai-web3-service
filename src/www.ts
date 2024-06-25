@@ -1,8 +1,9 @@
-import express, { Express } from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import { APP_ENV } from './constants';
 import cookieParser from 'cookie-parser';
 import { getClientIp } from 'request-ip';
-
+import Result from './utils/result';
+import 'express-async-errors';
 const app: Express = express();
 const port = APP_ENV.PORT;
 // app.set('trust proxy', 1);
@@ -39,6 +40,11 @@ import NFTRouter from './routers/nft';
 app.use('/v1/payment', PaymentRouter);
 app.use('/v1/nft', NFTRouter);
 app.use('', IndexRouter);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error('error: ', err);
+    res.send(Result.exception(err.message));
+});
 
 app.listen(port, async () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

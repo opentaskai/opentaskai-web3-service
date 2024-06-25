@@ -27,75 +27,75 @@ export default class Result {
         return { code: ERR_CODE.FAIL, msg, data };
     }
 
-    static db(data = false) {
+    static db(data?: any) {
         return Result._code(ERR_CODE.DATABASE_ERROR, data);
     }
 
-    static network(data = false) {
+    static network(data?: any) {
         return Result._code(ERR_CODE.NETWORK_ERROR, data);
     }
 
-    static param(data = false) {
+    static param(data?: any) {
         return Result._code(ERR_CODE.PARAMETER_ERROR, data);
     }
 
-    static no(data = false) {
+    static no(data?: any) {
         return Result._code(ERR_CODE.NOT_FOUND, data);
     }
 
-    static existence(data = false) {
+    static existence(data?: any) {
         return Result._code(ERR_CODE.EXISTENCE, data);
     }
 
-    static unchanged(data = false) {
+    static unchanged(data?: any) {
         return Result._code(ERR_CODE.NO_CHANGE, data);
     }
 
-    static unknown(data = false) {
+    static unknown(data?: any) {
         return Result._code(ERR_CODE.UNKNOWN, data);
     }
 
-    static badRequest(data = false) {
+    static badRequest(data?: any) {
         return Result._code(ERR_CODE.BAD_REQUEST, data);
     }
 
-    static unauthorized(data = false) {
+    static unauthorized(data?: any) {
         return Result._code(ERR_CODE.UNAUTHORIZED, data);
     }
 
-    static forbidden(data = false) {
+    static forbidden(data?: any) {
         return Result._code(ERR_CODE.FORBIDDEN, data);
     }
 
-    static tooLarge(data = false) {
+    static tooLarge(data?: any) {
         return Result._code(ERR_CODE.PAYLOAD_TOO_LARGE, data);
     }
 
-    static condition(data = false) {
+    static condition(data?: any) {
         return Result._code(ERR_CODE.PRECONDITION_REQUIRED, data);
     }
 
-    static exception(data = false) {
+    static exception(data?: any) {
         return Result._code(ERR_CODE.EXCEPTION, data);
     }
 
-    static timeout(data = false) {
+    static timeout(data?: any) {
         return Result._code(ERR_CODE.TIMEOUT, data);
     }
 
-    static rateLimit(data = false) {
+    static rateLimit(data?: any) {
         return Result._code(ERR_CODE.RATE_LIMIT, data);
     }
 
-    static tokenExpired(data = false) {
+    static tokenExpired(data?: any) {
         return Result._code(ERR_CODE.TOKEN_EXPIRED, data);
     }
 
-    static tokenInvalid(data = false) {
+    static tokenInvalid(data?: any) {
         return Result._code(ERR_CODE.TOKEN_INVALID, data);
     }
 
-    static busy(data = false) {
+    static busy(data?: any) {
         return Result._code(ERR_CODE.BUSY, data);
     }
 }

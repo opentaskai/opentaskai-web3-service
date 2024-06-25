@@ -293,13 +293,20 @@ export class BaseService implements IBaseService {
         return data;
     }
 
-    async findOneAndUpdate(where: any, data: any, options: FindOneAndUpdateOptions = {}): Promise<any> {
+    async findOneAndUpdate(where: any, data: any, options: FindOneAndUpdateOptions = { upsert: false }): Promise<any> {
         if (where?._id && typeof where._id === 'string') where._id = new ObjectId(where._id);
-        if (this.field_for_create_time && data[this.field_for_create_time]) delete data[this.field_for_create_time];
-        if (this.field_for_update_time) data['$set'] = { ...data.$set, [this.field_for_update_time]: new Date().toISOString() };
+        let update: any = { $set: {} };
+        if (!data.$set && !data.$inc) {
+            if (!options.upsert && this.field_for_create_time && data[this.field_for_create_time]) delete data[this.field_for_create_time];
+            update.$set = data;
+        } else {
+            update = data;
+        }
+
+        if (this.field_for_update_time) update.$set = { ...update.$set, [this.field_for_update_time]: new Date().toISOString() };
         Object.assign(options, { returnDocument: ReturnDocument.AFTER });
 
-        const res: any = await mongodb.dba.collection(this.table).findOneAndUpdate(where, data, options);
+        const res: any = await mongodb.dba.collection(this.table).findOneAndUpdate(where, update, options);
         if (res.value) {
             return res.value;
         } else {

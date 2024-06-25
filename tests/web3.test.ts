@@ -1,5 +1,5 @@
 import { constants, common, getChain } from 'opentaskai-web3-jssdk';
-import { getAiGenesis, getPayment } from '../src/web3';
+import { getAiGenesis, getSignPayment } from '../src/web3';
 import { uuid } from '../src/utils/util';
 import { APP_ENV } from '../src/constants';
 
@@ -7,7 +7,7 @@ describe('Web3', async () => {
     describe('base', async () => {
         let res: any;
         const chain = getChain(APP_ENV.CHAIN_ID);
-        const payment = getPayment(APP_ENV.CHAIN_ID);
+        const payment = getSignPayment(APP_ENV.CHAIN_ID);
         const nft = getAiGenesis(APP_ENV.CHAIN_ID);
         const expired = Math.floor(Date.now() / 1000) + 300;
 

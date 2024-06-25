@@ -13,6 +13,7 @@ export class TransactionService extends BaseService {
             channelId: 'string',
             channelUser: 'string',
             channelTx: 'string',
+            channelArgs: 'any',
             channelTime: 'string',
             data: 'any',
             status: 'string'
@@ -30,6 +31,10 @@ export class TransactionService extends BaseService {
             throw new Error('invalid sn');
         }
         return true;
+    }
+
+    async get(sn: string) {
+        return await this.findByUnique({ sn });
     }
 }
 
