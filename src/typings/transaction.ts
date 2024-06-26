@@ -14,6 +14,7 @@ export enum TransactionTypes {
 
 export enum TransactionStatus {
     pending = 'pending',
+    processing = 'processing',
     success = 'success',
     fail = 'fail',
     cancel = 'cancel'
