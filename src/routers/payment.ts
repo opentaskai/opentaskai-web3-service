@@ -20,6 +20,7 @@ function signPayment(req: any) {
 
 router.post('/signBindAccountData', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { account, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signBindAccountData(account, sn, expired);
@@ -32,6 +33,7 @@ router.post('/signBindAccountData', async (req: any, res) => {
 
 router.post('/signDepositData', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { to, token, amount, frozen, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signDepositData(to, token, amount, frozen, sn, expired);
@@ -44,6 +46,7 @@ router.post('/signDepositData', async (req: any, res) => {
 
 router.post('/signWithdraw', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { to, token, available, frozen, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signWithdraw(to, token, available, frozen, sn, expired);
@@ -56,6 +59,7 @@ router.post('/signWithdraw', async (req: any, res) => {
 
 router.post('/signFreezeData', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { account, token, amount, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signFreezeData(account, token, amount, sn, expired);
@@ -80,6 +84,7 @@ router.post('/signUnfreezeData', async (req: any, res) => {
 
 router.post('/signTransferData', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { out, token, from, to, available, frozen, amount, fee, paid, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signTransferData(out, token, from, to, available, frozen, amount, fee, paid, sn, expired);
@@ -92,6 +97,7 @@ router.post('/signTransferData', async (req: any, res) => {
 
 router.post('/signCancelData', async (req: any, res) => {
     try {
+        console.log(req.originalUrl, req.body);
         const { userA, userB, sn, expired } = req.body;
         await transactionService.checkSN(sn);
         const data = await signPayment(req).signCancelData(userA, userB, sn, expired);
@@ -102,7 +108,7 @@ router.post('/signCancelData', async (req: any, res) => {
 });
 
 router.post('/send', async (req: any, res) => {
-    console.log('send req.body:', req.body);
+    console.log(req.originalUrl, req.body);
     const { sn } = req.body;
     const transaction: any = await transactionService.get(sn);
     if (!transaction) {
