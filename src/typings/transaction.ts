@@ -6,8 +6,7 @@ export enum TransactionTypes {
     freezeDeposit = 'freezeDeposit', 
     unfreezeDeposit = 'unfreezeDeposit', 
     normalCompletion = 'normalCompletion',
-    negotiatedCompletion = 'negotiatedCompletion', 
-    defaultedCompletion = 'defaultedCompletion',
+    partialCompletion = 'partialCompletion',
     refundCompletion = 'refundCompletion',
     refund = 'refund'
 }

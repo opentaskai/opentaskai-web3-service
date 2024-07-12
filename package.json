@@ -44,7 +44,7 @@
         "moment": "^2.29.4",
         "mongodb": "^4.8.1",
         "nodemon": "^2.0.19",
-        "opentaskai-web3-jssdk": "^0.2.4",
+        "opentaskai-web3-jssdk": "^0.3.1",
         "request-ip": "^3.3.0",
         "sharp": "^0.32.6",
         "sleep-ts": "^0.1.1",
