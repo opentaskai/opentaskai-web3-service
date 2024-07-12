@@ -144,14 +144,14 @@ router.post('/send', async (req: any, res) => {
         const param = await signPayment.signFreezeData(order.owner, paidTransaction.channelArgs._token, amount, transaction.sn, expired);
         pay = payment.unfreeze(param.account, param.token, param.amount, param.sn, param.expired, param.sign.compact);
     } else if([TransactionTypes.normalCompletion, TransactionTypes.defaultedCompletion, TransactionTypes.negotiatedCompletion].includes(transaction.type)) {
-        const transferRate = await configService.getValue('transferRate', 1);
+        const transferRate = await configService.getValue('transferRate', 0);
         const token = await tokenService.get(transaction.channelId, paidTransaction.channelArgs._token);
         if (!token) {
             return res.send(Result.badRequest('invalid token, sn' +  sn));
         }
         const frozen = common.bignumber.bnWithDecimals(transaction.amount, token.decimals);
-        const amount = BigNumber(frozen).multipliedBy(transferRate);
-        const fee = BigNumber(frozen).minus(amount);
+        const fee = BigNumber(frozen).multipliedBy(transferRate);
+        const amount = BigNumber(frozen).minus(fee);
         const param = await signPayment.signTransferData(
             payment.chain.getNativeAddr(), 
             token.address, 
