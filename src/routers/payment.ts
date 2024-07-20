@@ -31,6 +31,19 @@ router.post('/signBindAccountData', async (req: any, res) => {
     }
 });
 
+router.post('/signReplaceAccountData', async (req: any, res) => {
+    try {
+        console.log(req.originalUrl, req.body);
+        const { account, wallet, sn, expired } = req.body;
+        await transactionService.checkSN(sn);
+        const data = await signPayment(req).signReplaceAccountData(account, wallet, sn, expired);
+        cleanData(data);
+        res.send(Result.success(data));
+    } catch (error: any) {
+        res.send(Result.fail(error.message));
+    }
+});
+
 router.post('/signDepositData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
@@ -150,6 +163,7 @@ router.post('/send', async (req: any, res) => {
         const amount = common.bignumber.bnWithDecimals(transaction.amount, token.decimals);
         const fee = BigNumber(amount).multipliedBy(transferRate).toFixed();
         const param = await signPayment.signUnFreezeData(order.owner, paidTransaction.channelArgs._token, amount, fee, transaction.sn, expired);
+        console.debug('transfer unfreeze:', param);
         pay = payment.unfreeze(param.account, param.token, param.amount, param.fee, param.sn, param.expired, param.sign.compact);
     } else if([TransactionTypes.normalCompletion, TransactionTypes.partialCompletion].includes(transaction.type)) {
         const token = await tokenService.get(transaction.channelId, paidTransaction.channelArgs._token);
@@ -183,7 +197,7 @@ router.post('/send', async (req: any, res) => {
             fee: param.fee,
             paid: param.paid
         }
-
+        console.debug('transfer deal:', param);
         pay = payment.transfer(param.out, deal, param.sn, param.expired, param.sign.compact);
     } else {
         return res.send(Result.badRequest('bad type, sn: ' +  sn));
