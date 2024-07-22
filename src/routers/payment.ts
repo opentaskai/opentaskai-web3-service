@@ -10,6 +10,7 @@ import { getChainId } from '../utils/request';
 import { TransactionTypes, TransactionStatus } from '../typings/transaction';
 import { common } from 'opentaskai-web3-jssdk';
 import { BigNumber } from 'bignumber.js';
+import moment from 'moment';
 
 const router: Router = Router();
 
@@ -129,6 +130,12 @@ router.post('/send', async (req: any, res) => {
     }
     if (transaction.status === TransactionStatus.success) {
         return res.send(Result.badRequest('already handle, sn: ' +  sn));
+    }
+
+    const lossTime = moment.utc().diff(moment.utc(transaction.updatedAt), 's');
+    const retryEpoch = await configService.getValue('TransactionRetryEpoch', 300);
+    if (transaction.status === TransactionStatus.processing && lossTime < retryEpoch) {
+        return res.send(Result.badRequest('busy, wait ' +  (300 - lossTime) + ' seconds to retry.'));
     }
 
     if (!transaction.amount) {
