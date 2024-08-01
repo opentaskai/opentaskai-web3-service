@@ -161,7 +161,11 @@ router.post('/send', async (req: any, res) => {
 
     let pay:any = null;
     const expired = await configService.getSignatureExpired();
-    const transferRate = await configService.getValue('transferRate', 0);
+    let transferRate = await configService.getValue('transferRate', 0);
+    if (transaction.input && Object.keys(transaction.input).includes('hasFee') && !transaction.input.hasFee) {
+        transferRate = 0;
+    }
+    transferRate = await configService.getValue('transferRate', 0);
     if (transaction.type === TransactionTypes.refundCompletion) {
         const token = await tokenService.get(transaction.channelId, paidTransaction.channelArgs._token);
         if (!token) {
