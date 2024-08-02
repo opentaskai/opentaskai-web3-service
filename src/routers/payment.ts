@@ -184,6 +184,7 @@ router.post('/send', async (req: any, res) => {
         const paid = common.bignumber.bnWithDecimals(order.paidAmount, token.decimals);
         const frozen = common.bignumber.bnWithDecimals(transaction.amount, token.decimals);
         const fee = BigNumber(frozen).multipliedBy(transferRate);
+        const excessFee = '0';
         const amount = BigNumber(frozen).minus(fee);
         const param = await signPayment.signTransferData(
             payment.chain.getNativeAddr(), 
@@ -195,6 +196,7 @@ router.post('/send', async (req: any, res) => {
             amount.toFixed(),
             fee.toFixed(),
             paid,
+            excessFee,
             transaction.sn, 
             expired
         );
@@ -206,7 +208,8 @@ router.post('/send', async (req: any, res) => {
             frozen: param.frozen,
             amount: param.amount,
             fee: param.fee,
-            paid: param.paid
+            paid: param.paid,
+            excessFee: param.excessFee
         }
         console.debug('transfer deal:', param);
         pay = payment.transfer(param.out, deal, param.sn, param.expired, param.sign.compact);
