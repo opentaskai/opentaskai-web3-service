@@ -10,7 +10,6 @@ echo "app name: $APP_NAME"
 git pull
 #rm -rf .next
 pnpm install
-pnpm swagger
 pnpm run build
 echo "pm2 restart $APP_NAME"
 pm2 restart $APP_NAME
