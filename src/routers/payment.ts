@@ -99,9 +99,9 @@ router.post('/signUnfreezeData', async (req: any, res) => {
 router.post('/signTransferData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { out, token, from, to, available, frozen, amount, fee, paid, sn, expired } = req.body;
+        const { out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signTransferData(out, token, from, to, available, frozen, amount, fee, paid, sn, expired);
+        const data = await signPayment(req).signTransferData(out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
