@@ -7,6 +7,7 @@ echo "current folder: $DIR_NAME"
 APP_NAME=${DIR_NAME}
 echo "app name: $APP_NAME"
 
+git checkout pnpm-lock.yaml
 git pull
 #rm -rf .next
 pnpm install
