@@ -61,9 +61,9 @@ router.post('/signDepositData', async (req: any, res) => {
 router.post('/signWithdraw', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { to, token, available, frozen, sn, expired } = req.body;
+        const { from, to, token, available, frozen, sn, expired } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signWithdraw(to, token, available, frozen, sn, expired);
+        const data = await signPayment(req).signWithdraw(from, to, token, available, frozen, sn, expired);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
