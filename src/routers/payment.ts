@@ -171,6 +171,7 @@ router.post('/send', async (req: any, res) => {
         if (!token) {
             return res.send(Result.badRequest('invalid token, sn' +  sn));
         }
+        if (transaction.input && transaction.input?.hasFee === false) transferRate = 0;
         const amount = common.bignumber.bnWithDecimals(transaction.amount, token.decimals);
         const fee = BigNumber(amount).multipliedBy(transferRate).toFixed();
         const param = await signPayment.signUnFreezeData(order.owner, paidTransaction.channelArgs._token, amount, fee, transaction.sn, expired);
