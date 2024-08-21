@@ -158,6 +158,7 @@ router.post('/send', async (req: any, res) => {
     if (!payment) {
         return res.send(Result.badRequest('no clear payment, sn' +  sn));
     }
+    console.log('chainId:', payment.chain.chainId);
 
     let pay:any = null;
     const expired = await configService.getSignatureExpired();
@@ -218,7 +219,7 @@ router.post('/send', async (req: any, res) => {
         return res.send(Result.badRequest('bad type, sn: ' +  sn));
     }
     
-    const gas = await pay.estimateGas();
+    // const gas = await pay.estimateGas();
     // console.log('gas:', gas);
     const result = await pay.transact();
     console.log('tx hash:', result.hash);
