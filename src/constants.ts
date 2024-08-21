@@ -55,3 +55,7 @@ export enum TRANS_CHANNEL {
     WEB3 = 'web3',
     PAYPAL = 'paypal'
 }
+
+export const getRPC = (chainId: number|string)=> {
+    return process.env['RPC_' + chainId] ?? '';
+}
