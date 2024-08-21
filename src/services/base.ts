@@ -310,7 +310,7 @@ export class BaseService implements IBaseService {
         if (res.value) {
             return res.value;
         } else {
-            throw new AppError(ERR_CODE.NOT_FOUND);
+            throw new AppError(ERR_CODE.NOT_FOUND, JSON.stringify(where));
         }
     }
 
