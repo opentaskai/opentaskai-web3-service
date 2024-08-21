@@ -9,7 +9,7 @@ const _cacheSignerPayment: Record<number, Payment> = {};
 export function getSignPayment(chainId: any): Payment {
     chainId = Number(chainId);
     if (!_cacheSignerPayment[chainId]) {
-        const chain = getChain(chainId);
+        const chain = getChain(chainId, APP_ENV.CHAIN_RPC);
         _cacheSignerPayment[chainId] = new Payment(chain);
         _cacheSignerPayment[chainId].setSigner(signer);
     }
@@ -21,7 +21,7 @@ const _cacheClearPayment: Record<number, Payment> = {};
 export function getClearPayment(chainId: any): Payment {
     chainId = Number(chainId);
     if (!_cacheClearPayment[chainId]) {
-        const chain = new LocalChain(chainId);
+        const chain = new LocalChain(chainId, APP_ENV.CHAIN_RPC);
         chain.connect(clearer);
         console.log('clearer:', clearer.address);
         _cacheClearPayment[chainId] = new Payment(chain);
@@ -34,7 +34,7 @@ const _cacheAIGenesis: Record<number, NFT> = {};
 export function getAiGenesis(chainId: any): NFT {
     chainId = Number(chainId);
     if (!_cacheAIGenesis[chainId]) {
-        const chain = getChain(chainId);
+        const chain = getChain(chainId, APP_ENV.CHAIN_RPC);
         const network = opentaskai.getNetworkMeta(chain.chainId);
         _cacheAIGenesis[chainId] = getNFT(chain, network.AIGenesis);
         _cacheAIGenesis[chainId].setSigner(signer);
