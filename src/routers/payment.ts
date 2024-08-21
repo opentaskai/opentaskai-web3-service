@@ -222,7 +222,8 @@ router.post('/send', async (req: any, res) => {
     // console.log('gas:', gas);
     const result = await pay.transact();
     console.log('tx hash:', result.hash);
-    // const result2 = await res.wait();
+    const recepit = await result.wait();
+    console.log('recepit:', recepit);
     const data = await transactionService.findOneAndUpdate({ sn, status: { $ne: TransactionStatus.success }}, { channelTx: result.hash, status: TransactionStatus.processing });
     return res.send(Result.success(data));
 });
