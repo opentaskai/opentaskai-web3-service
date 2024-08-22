@@ -66,7 +66,10 @@ export const EMAIL_ENV: EMAIL_TYPE = {
     EMAIL_EXPIRED: Number(process.env.EMAIL_EXPIRED ?? '300000')
 };
 
-export const CHECK_SEND_PENDING = Number(process.env.CHECK_SEND_PENDING ?? '10')
+export const CHECK_ENV = {
+    SEND_PENDING: Number(process.env.CHECK_SEND_PENDING ?? '10'),
+    EMAIL_RECEIVER: process.env.CHECK_EMAIL_RECEIVER ?? '',
+}
 
 export enum TRANS_CHANNEL {
     LOCAL = 'local',
