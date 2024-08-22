@@ -123,6 +123,8 @@ router.post('/signCancelData', async (req: any, res) => {
 
 router.post('/send', async (req: any, res) => {
     console.log(req.originalUrl, req.body);
+    return res.send(Result.fail());
+
     const { sn } = req.body;
     const transaction: any = await transactionService.get(sn);
     if (!transaction) {
