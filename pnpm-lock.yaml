@@ -53,12 +53,15 @@ dependencies:
   mongodb:
     specifier: ^4.8.1
     version: 4.17.1
+  nodemailer:
+    specifier: ^6.9.14
+    version: 6.9.14
   nodemon:
     specifier: ^2.0.19
     version: 2.0.22
   opentaskai-web3-jssdk:
-    specifier: ^0.3.8
-    version: 0.3.8
+    specifier: ^0.3.9
+    version: 0.3.9
   request-ip:
     specifier: ^3.3.0
     version: 3.3.0
@@ -115,6 +118,9 @@ devDependencies:
   '@types/node':
     specifier: ^12.20.47
     version: 12.20.55
+  '@types/nodemailer':
+    specifier: ^6.4.15
+    version: 6.4.15
   '@types/request-ip':
     specifier: ^0.0.41
     version: 0.0.41
@@ -1884,6 +1890,12 @@ packages:
 
   /@types/node@12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  /@types/nodemailer@6.4.15:
+    resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
+    dependencies:
+      '@types/node': 12.20.55
+    dev: true
 
   /@types/parse-author@2.0.3:
     resolution: {integrity: sha512-pgRW2K/GVQoogylrGJXDl7PBLW9A6T4OOc9Hy9MLT5f7vgufK2GQ8FcfAbjFHR5HjcN9ByzuCczAORk49REqoA==}
@@ -4711,6 +4723,11 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
+  /nodemailer@6.9.14:
+    resolution: {integrity: sha512-Dobp/ebDKBvz91sbtRKhcznLThrKxKt97GI2FAlAyy+fk19j73Uz3sBXolVtmcXjaorivqsbbbjDY+Jkt4/bQA==}
+    engines: {node: '>=6.0.0'}
+    dev: false
+
   /nodemon@2.0.22:
     resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==}
     engines: {node: '>=8.10.0'}
@@ -4825,8 +4842,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /opentaskai-web3-jssdk@0.3.8:
-    resolution: {integrity: sha512-JOZCTSR0+KSKWx3SFa4pBTDP1iQQdIDpTIapLVOtCTWt/o4DEgRfFkeT4V7/DsI/Bbgd+6eeN5coIU4h4VZU9g==}
+  /opentaskai-web3-jssdk@0.3.9:
+    resolution: {integrity: sha512-oKwiQxXxL8ffDpL/VH1pFKTFnkD6LhCYT5ZmVbBF1h4qN/eNTyP1w2BKC1Nb/h6kRx9EzgyR8HsYkugFd5cSpw==}
     dependencies:
       '@0xsequence/multicall': 0.41.3
       '@ethersproject/abi': 5.7.0

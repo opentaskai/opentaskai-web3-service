@@ -33,6 +33,14 @@ export type APP_ENV_TYPE = {
     IS_CHECK_SN: boolean;
 };
 
+export type EMAIL_TYPE = {
+    EMAIL_SERVER: string;
+    EMAIL_PORT: string | number;
+    EMAIL_USERNAME: string;
+    EMAIL_PASSWORD: string;
+    EMAIL_EXPIRED: number;
+};
+
 export const APP_ENV: APP_ENV_TYPE = {
     PORT: process.env.PORT + '',
     WEB_SESSION_KEY: process.env.WEB_SESSION_KEY ?? 'opentaskai_Web3API_session',
@@ -49,6 +57,16 @@ export const APP_ENV: APP_ENV_TYPE = {
     IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',') : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],
     IS_CHECK_SN: toBool(process.env.IS_CHECK_SN, true)
 };
+
+export const EMAIL_ENV: EMAIL_TYPE = {
+    EMAIL_SERVER: process.env.EMAIL_SERVER + '',
+    EMAIL_PORT: process.env.EMAIL_PORT + '',
+    EMAIL_USERNAME: process.env.EMAIL_USERNAME + '',
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD + '',
+    EMAIL_EXPIRED: Number(process.env.EMAIL_EXPIRED ?? '300000')
+};
+
+export const CHECK_SEND_PENDING = Number(process.env.CHECK_SEND_PENDING ?? '10')
 
 export enum TRANS_CHANNEL {
     LOCAL = 'local',
