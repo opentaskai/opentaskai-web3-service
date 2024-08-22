@@ -10,6 +10,7 @@ import { getChainId } from '../utils/request';
 import { TransactionTypes, TransactionStatus } from '../typings/transaction';
 import { common } from 'opentaskai-web3-jssdk';
 import { BigNumber } from 'bignumber.js';
+import { BigNumber as EthBigNumber } from 'ethers';
 import moment from 'moment';
 
 const router: Router = Router();
@@ -123,8 +124,6 @@ router.post('/signCancelData', async (req: any, res) => {
 
 router.post('/send', async (req: any, res) => {
     console.log(req.originalUrl, req.body);
-    return res.send(Result.fail());
-
     const { sn } = req.body;
     const transaction: any = await transactionService.get(sn);
     if (!transaction) {
@@ -221,9 +220,12 @@ router.post('/send', async (req: any, res) => {
         return res.send(Result.badRequest('bad type, sn: ' +  sn));
     }
     
-    // const gas = await pay.estimateGas();
-    // console.log('gas:', gas);
-    const result = await pay.transact();
+    const gas = await pay.estimateGas();
+    const gasLimit = gas.add(10000);
+    const price = await payment.chain.getGasPrice();
+    const gasPrice = EthBigNumber.from(price).mul(110).div(100);
+    console.log('gas:', gasLimit, gasPrice);
+    const result = await pay.transact({gasLimit, gasPrice});
     console.log('tx hash:', result.hash);
     // const receipt = await result.wait();
     // console.log('receipt:', receipt);
