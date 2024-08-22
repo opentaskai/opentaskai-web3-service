@@ -223,7 +223,7 @@ router.post('/send', async (req: any, res) => {
     const gas = await pay.estimateGas();
     const gasLimit = gas.add(10000);
     const price = await payment.chain.getGasPrice();
-    const gasPrice = EthBigNumber.from(price).mul(110).div(100);
+    const gasPrice = EthBigNumber.from(price).mul(120).div(100);
     console.log('gas:', gasLimit, gasPrice);
     const result = await pay.transact({gasLimit, gasPrice});
     console.log('tx hash:', result.hash);
