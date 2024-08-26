@@ -71,6 +71,8 @@ export const CHECK_ENV = {
     EMAIL_RECEIVER: process.env.CHECK_EMAIL_RECEIVER ?? '',
 }
 
+export const CHAIN_IDS = process.env.CHAIN_IDS ? process.env.CHAIN_IDS.split(',').map((d) => Number(d)) : [];
+
 export enum TRANS_CHANNEL {
     LOCAL = 'local',
     WEB3 = 'web3',

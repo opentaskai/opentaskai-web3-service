@@ -36,9 +36,11 @@ app.use((req, res, next) => {
 import IndexRouter from './routers/index';
 import PaymentRouter from './routers/payment';
 import NFTRouter from './routers/nft';
+import MetricsRouter from './routers/metrics';
 
 app.use('/v1/payment', PaymentRouter);
 app.use('/v1/nft', NFTRouter);
+app.use('/v1/metrics', MetricsRouter);
 app.use('', IndexRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
