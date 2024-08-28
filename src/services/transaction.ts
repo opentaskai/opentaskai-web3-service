@@ -1,5 +1,6 @@
 import { BaseService } from './base';
 import { APP_ENV } from '../constants';
+import { TransactionStatus } from '../typings/transaction';
 
 export class TransactionService extends BaseService {
     initFields() {
@@ -24,13 +25,16 @@ export class TransactionService extends BaseService {
     async checkSN(sn: string) {
         console.log('APP_ENV.IS_CHECK_SN:', APP_ENV.IS_CHECK_SN);
         if (!APP_ENV.IS_CHECK_SN) {
-            return true;
+            return null;
         }
         const res = await this.findByUnique({ sn });
         if (!res) {
             throw new Error('invalid sn');
         }
-        return true;
+        if (res.status !== TransactionStatus.pending) {
+            throw new Error('only sign for new request record');
+        }
+        return res;
     }
 
     async get(sn: string) {
