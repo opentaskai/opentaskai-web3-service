@@ -54,7 +54,7 @@ export const APP_ENV: APP_ENV_TYPE = {
     SIGNER_PK: process.env.SIGNER_PK ?? '',
     CLEARER_PK: process.env.CLEARER_PK ?? '',
     CHAIN_RPC: process.env.CHAIN_RPC ?? '',
-    IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',') : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],
+    IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',').concat(['127.0.0.1', '::1', '::ffff:127.0.0.1']) : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],
     IS_CHECK_SN: toBool(process.env.IS_CHECK_SN, true)
 };
 
