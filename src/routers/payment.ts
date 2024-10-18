@@ -12,12 +12,21 @@ import { common } from 'opentaskai-web3-jssdk';
 import { BigNumber } from 'bignumber.js';
 import { BigNumber as EthBigNumber } from 'ethers';
 import moment from 'moment';
+import { PaymentSol } from '../payment.sol';
+import { getKeypairFromBase58Key } from '../utils/solutil';
+import { APP_ENV } from '../constants';
 
 const router: Router = Router();
 
 function signPayment(req: any) {
     const chainId = getChainId(req);
-    return getSignPayment(chainId);
+    if (Number.isInteger(Number(chainId))) {
+        return getSignPayment(chainId);
+    } else if (['soldevnet', 'solmainnet'].includes(chainId)) {
+        return new PaymentSol(getKeypairFromBase58Key(APP_ENV.SIGNER_SOL_PK));
+    } else {
+        throw new Error('invalid chainId: ' + chainId);
+    }
 }
 
 router.post('/signBindAccountData', async (req: any, res) => {
