@@ -28,6 +28,7 @@ export type APP_ENV_TYPE = {
     CHAIN_ID: number;
     SIGNER_PK: string;
     SIGNER_SOL_PK: string;
+    FEE_USER_SOL_PK: string;
     CLEARER_PK: string;
     CHAIN_RPC: string;
     IP_WHITE_LIST: string[];
@@ -54,6 +55,7 @@ export const APP_ENV: APP_ENV_TYPE = {
     CHAIN_ID: process.env.CHAIN_ID ? Number(process.env.CHAIN_ID) : 56,
     SIGNER_PK: process.env.SIGNER_PK ?? '',
     SIGNER_SOL_PK: process.env.SIGNER_SOL_PK ?? '',
+    FEE_USER_SOL_PK: process.env.FEE_USER_SOL_PK ?? '', 
     CLEARER_PK: process.env.CLEARER_PK ?? '',
     CHAIN_RPC: process.env.CHAIN_RPC ?? '',
     IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',').concat(['127.0.0.1', '::1', '::ffff:127.0.0.1']) : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],

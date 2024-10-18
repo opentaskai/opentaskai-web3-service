@@ -17,11 +17,16 @@ export function getEd25519Instruction(message: any, signerKeypair: Keypair) {
   return {ed25519Instruction, signature};
 }
 
+export function getSignStringForEd25519(message: any, signerKeypair: Keypair) {
+  const signature = signMessageForEd25519(message, signerKeypair);
+  return uint8ArrayToHexString(signature);
+}
+
 export function signMessageForEd25519(message: any, signerKeypair: Keypair) {
   const messageHash = Uint8Array.from(createHash('sha256').update(message).digest());
   // console.log("Message hash:", messageHash.toString('hex'));
   const signature = nacl.sign.detached(messageHash, signerKeypair.secretKey);
-  console.log("Signature:", signature);
+  // console.log("Signature:", signature);
   return signature;
 }
 
