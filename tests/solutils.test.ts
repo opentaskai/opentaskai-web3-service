@@ -11,6 +11,11 @@ describe('Utils', async () => {
 
         after(async () => {});
 
+        it('bytes32Buffer', async () => {
+            const res = bytes32Buffer('12345678901234567890123456789012');
+            console.log('bytes32Buffer:', res);
+        });
+
         it('test', async () => {
             let keypair = Keypair.generate();
             let secretKey = getBase58Key(keypair);

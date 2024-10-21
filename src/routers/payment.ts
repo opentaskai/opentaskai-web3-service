@@ -14,7 +14,7 @@ import { BigNumber as EthBigNumber } from 'ethers';
 import moment from 'moment';
 import { PaymentSol } from '../payment.sol';
 import { getKeypairFromBase58Key } from '../utils/solutil';
-import { APP_ENV } from '../constants';
+import { APP_ENV, getRPC } from '../constants';
 
 const router: Router = Router();
 
@@ -23,7 +23,7 @@ function signPayment(req: any) {
     if (Number.isInteger(Number(chainId))) {
         return getSignPayment(chainId);
     } else if (['soldevnet', 'solmainnet'].includes(chainId)) {
-        return new PaymentSol(getKeypairFromBase58Key(APP_ENV.SIGNER_SOL_PK));
+        return new PaymentSol(getRPC(chainId));
     } else {
         throw new Error('invalid chainId: ' + chainId);
     }
@@ -32,9 +32,9 @@ function signPayment(req: any) {
 router.post('/signBindAccountData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { account, sn, expired } = req.body;
+        const { account, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signBindAccountData(account, sn, expired);
+        const data = await signPayment(req).signBindAccountData(account, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -45,9 +45,9 @@ router.post('/signBindAccountData', async (req: any, res) => {
 router.post('/signReplaceAccountData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { account, wallet, sn, expired } = req.body;
+        const { account, wallet, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signReplaceAccountData(account, wallet, sn, expired);
+        const data = await signPayment(req).signReplaceAccountData(account, wallet, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -58,9 +58,9 @@ router.post('/signReplaceAccountData', async (req: any, res) => {
 router.post('/signDepositData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { to, token, amount, frozen, sn, expired } = req.body;
+        const { to, token, amount, frozen, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signDepositData(to, token, amount, frozen, sn, expired);
+        const data = await signPayment(req).signDepositData(to, token, amount, frozen, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -71,9 +71,9 @@ router.post('/signDepositData', async (req: any, res) => {
 router.post('/signWithdraw', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { from, to, token, available, frozen, sn, expired } = req.body;
+        const { from, to, token, available, frozen, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signWithdraw(from, to, token, available, frozen, sn, expired);
+        const data = await signPayment(req).signWithdraw(from, to, token, available, frozen, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -84,9 +84,9 @@ router.post('/signWithdraw', async (req: any, res) => {
 router.post('/signFreezeData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { account, token, amount, sn, expired } = req.body;
+        const { account, token, amount, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signFreezeData(account, token, amount, sn, expired);
+        const data = await signPayment(req).signFreezeData(account, token, amount, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -96,9 +96,9 @@ router.post('/signFreezeData', async (req: any, res) => {
 
 router.post('/signUnfreezeData', async (req: any, res) => {
     try {
-        const { account, token, amount, fee, sn, expired } = req.body;
+        const { account, token, amount, fee, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signUnFreezeData(account, token, amount, fee, sn, expired);
+        const data = await signPayment(req).signUnFreezeData(account, token, amount, fee, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -109,9 +109,9 @@ router.post('/signUnfreezeData', async (req: any, res) => {
 router.post('/signTransferData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired } = req.body;
+        const { out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signTransferData(out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired);
+        const data = await signPayment(req).signTransferData(out, token, from, to, available, frozen, amount, fee, paid, excessFee, sn, expired, payer);
         cleanData(data);
         res.send(Result.success(data));
     } catch (error: any) {
@@ -122,9 +122,9 @@ router.post('/signTransferData', async (req: any, res) => {
 router.post('/signCancelData', async (req: any, res) => {
     try {
         console.log(req.originalUrl, req.body);
-        const { userA, userB, sn, expired } = req.body;
+        const { userA, userB, sn, expired, payer } = req.body;
         await transactionService.checkSN(sn);
-        const data = await signPayment(req).signCancelData(userA, userB, sn, expired);
+        const data = await signPayment(req).signCancelData(userA, userB, sn, expired, payer);
         res.send(Result.success(data));
     } catch (error: any) {
         res.send(Result.fail(error.message));
@@ -186,8 +186,9 @@ router.post('/send', async (req: any, res) => {
         const amount = common.bignumber.bnWithDecimals(transaction.amount, token.decimals);
         const fee = BigNumber(amount).multipliedBy(transferRate).toFixed();
         const param = await signPayment.signUnFreezeData(order.owner, paidTransaction.channelArgs._token, amount, fee, transaction.sn, expired);
+        cleanData(param);
         console.debug('transfer unfreeze:', param);
-        pay = payment.unfreeze(param.account, param.token, param.amount, param.fee, param.sn, param.expired, param.sign.compact);
+        pay = payment.unfreeze(param.account, param.token, param.amount, param.fee, param.sn, param.expired, param.signature);
     } else if([TransactionTypes.normalCompletion, TransactionTypes.partialCompletion].includes(transaction.type)) {
         const token = await tokenService.get(transaction.channelId, paidTransaction.channelArgs._token);
         if (!token) {
@@ -223,8 +224,9 @@ router.post('/send', async (req: any, res) => {
             paid: param.paid,
             excessFee: param.excessFee
         }
+        cleanData(param);
         console.debug('transfer deal:', param);
-        pay = payment.transfer(param.out, deal, param.sn, param.expired, param.sign.compact);
+        pay = payment.transfer(param.out, deal, param.sn, param.expired, param.signature);
     } else {
         return res.send(Result.badRequest('bad type, sn: ' +  sn));
     }
@@ -241,6 +243,10 @@ router.post('/send', async (req: any, res) => {
     const data = await transactionService.findOneAndUpdate({ sn, status: { $ne: TransactionStatus.success }}, { channelTx: result.hash, status: TransactionStatus.processing });
     return res.send(Result.success(data));
 });
+
+async function settleWithEVM(payment: any) {
+    // const connection = new web3.Connection(rpcUrl)
+}
 
 
 export default router;

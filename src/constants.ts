@@ -28,8 +28,9 @@ export type APP_ENV_TYPE = {
     CHAIN_ID: number;
     SIGNER_PK: string;
     SIGNER_SOL_PK: string;
-    FEE_USER_SOL_PK: string;
+    FEE_USER_SOL: string;
     CLEARER_PK: string;
+    CLEARER_SOL_PK: string;
     CHAIN_RPC: string;
     IP_WHITE_LIST: string[];
     IS_CHECK_SN: boolean;
@@ -55,8 +56,9 @@ export const APP_ENV: APP_ENV_TYPE = {
     CHAIN_ID: process.env.CHAIN_ID ? Number(process.env.CHAIN_ID) : 56,
     SIGNER_PK: process.env.SIGNER_PK ?? '',
     SIGNER_SOL_PK: process.env.SIGNER_SOL_PK ?? '',
-    FEE_USER_SOL_PK: process.env.FEE_USER_SOL_PK ?? '', 
+    FEE_USER_SOL: process.env.FEE_USER_SOL ?? '', 
     CLEARER_PK: process.env.CLEARER_PK ?? '',
+    CLEARER_SOL_PK: process.env.CLEARER_SOL_PK ?? '',
     CHAIN_RPC: process.env.CHAIN_RPC ?? '',
     IP_WHITE_LIST: process.env.IP_WHITE_LIST ? process.env.IP_WHITE_LIST.split(',').concat(['127.0.0.1', '::1', '::ffff:127.0.0.1']) : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],
     IS_CHECK_SN: toBool(process.env.IS_CHECK_SN, true)
@@ -86,3 +88,5 @@ export enum TRANS_CHANNEL {
 export const getRPC = (chainId: number|string)=> {
     return process.env['RPC_' + chainId] ?? '';
 }
+
+export const SOL_PAYMENT_ADDR = process.env.SOL_PAYMENT_ADDR ?? '';

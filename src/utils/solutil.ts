@@ -8,24 +8,28 @@ import nacl from 'tweetnacl';
 import bs58 from 'bs58'; 
 
 export function getEd25519Instruction(message: any, signerKeypair: Keypair) {
-  const signature = signMessageForEd25519(message, signerKeypair);
+  const messageHash = getMessageHash(message);
+  const signature = signMessageForEd25519(messageHash, signerKeypair);
   const ed25519Instruction = Ed25519Program.createInstructionWithPublicKey({
     publicKey: signerKeypair.publicKey.toBytes(),
-    message: message,
+    message: messageHash,
     signature: signature,
   });
   return {ed25519Instruction, signature};
 }
 
 export function getSignStringForEd25519(message: any, signerKeypair: Keypair) {
-  const signature = signMessageForEd25519(message, signerKeypair);
+  const messageHash = getMessageHash(message);
+  const signature = signMessageForEd25519(messageHash, signerKeypair);
   return uint8ArrayToHexString(signature);
 }
 
+export function getMessageHash(message: any) {
+  return Uint8Array.from(createHash('sha256').update(message).digest());
+}
+
 export function signMessageForEd25519(message: any, signerKeypair: Keypair) {
-  const messageHash = Uint8Array.from(createHash('sha256').update(message).digest());
-  // console.log("Message hash:", messageHash.toString('hex'));
-  const signature = nacl.sign.detached(messageHash, signerKeypair.secretKey);
+  const signature = nacl.sign.detached(message, signerKeypair.secretKey);
   // console.log("Signature:", signature);
   return signature;
 }
@@ -34,9 +38,11 @@ export function bytes32Buffer(snHex: string|number) {
   snHex = String(snHex);
   const snBytes = Buffer.from(snHex, 'hex');
   const len = 32 - snBytes.length;
-  let res = snBytes;
+  let res:Buffer = snBytes;
   if(len > 0) {
-    res = Buffer.concat([Buffer.alloc(len), snBytes]); // Pad with 16 zeros at the beginning
+    const obj = new Uint8Array(32); // Create a new Uint8Array of length 32
+    obj.set(snBytes, len); // Set snBytes starting from the padding position
+    res = Buffer.from(obj);
   }
   // console.log('snHex, snBytes, bytes32Buffer:', snHex, snBytes, res);
   return res;

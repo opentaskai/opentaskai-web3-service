@@ -49,7 +49,7 @@
         "mongodb": "^4.8.1",
         "nodemailer": "^6.9.14",
         "nodemon": "^2.0.19",
-        "opentaskai-web3-jssdk": "^0.3.11",
+        "opentaskai-web3-jssdk": "^0.3.14",
         "request-ip": "^3.3.0",
         "sharp": "^0.32.6",
         "sleep-ts": "^0.1.1",
@@ -89,12 +89,13 @@
         "eslint-plugin-promise": "^6.0.0",
         "husky": ">=6",
         "lint-staged": ">=10",
-        "mocha": "^10.0.0",
+        "mocha": "^10.2.0",
         "prettier": "^2.5.1",
         "prettier-package-json": "^2.6.3",
         "prettier-plugin-solidity": "^1.0.0-beta.13",
+        "punycode": "^2.3.1",
         "ts-node": "^10.7.0",
-        "typescript": "^4.6.2"
+        "typescript": "^5.6.3"
     },
     "engines": {
         "node": ">=14.0.0"
